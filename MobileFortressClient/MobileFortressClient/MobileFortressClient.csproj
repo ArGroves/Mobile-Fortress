@@ -79,8 +79,9 @@
     <Reference Include="BEPUphysics">
       <HintPath>..\..\..\SS13 Prototype Models\BEPUphysics v1.2.0\x86\Release\BEPUphysics.dll</HintPath>
     </Reference>
-    <Reference Include="Lidgren.Network">
-      <HintPath>..\..\Networking\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Release\Lidgren.Network.dll</HintPath>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLLs\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="LzmaSharp">
       <HintPath>..\..\Networking\xna-4.0-x86\LzmaSharp.dll</HintPath>
