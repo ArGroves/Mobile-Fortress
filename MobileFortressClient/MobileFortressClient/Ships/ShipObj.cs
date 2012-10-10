@@ -45,16 +45,16 @@ namespace MobileFortressClient.Ships
             Sector.Redria.Space.Add(Data.Hitbox);
             this.Entity = Data.Hitbox;
 
-            Thrusters = new SingleEntityLinearMotor(Entity, Position);
-            ControlSurfaces = new SingleEntityAngularMotor(Entity);
-            ControlSurfaces.Settings.Mode = MotorMode.Servomechanism;
-            ControlSurfaces.Settings.Servo.MaxCorrectiveVelocity = 2;
+            //Thrusters = new SingleEntityLinearMotor(Entity, Position);
+            //ControlSurfaces = new SingleEntityAngularMotor(Entity);
+            //ControlSurfaces.Settings.Mode = MotorMode.Servomechanism;
+            //ControlSurfaces.Settings.Servo.MaxCorrectiveVelocity = 2;
 
-            Thrusters.Settings.Mode = MotorMode.VelocityMotor;
-            Thrusters.Settings.VelocityMotor.Softness = 0.002f;
+            //Thrusters.Settings.Mode = MotorMode.VelocityMotor;
+            //Thrusters.Settings.VelocityMotor.Softness = 0.002f;
 
-            Sector.Redria.Space.Add(Thrusters);
-            Sector.Redria.Space.Add(ControlSurfaces);
+            //Sector.Redria.Space.Add(Thrusters);
+            //Sector.Redria.Space.Add(ControlSurfaces);
             Entity.IsAffectedByGravity = false;
 
             engineNoise = Resources.Sounds.Engine.CreateInstance();
@@ -70,10 +70,14 @@ namespace MobileFortressClient.Ships
             explosionNoise.Apply3D(Camera.Audio, Audio);
             explosionNoise.Play();
             Sector.Redria.Ships.Remove(this);
-            Sector.Redria.Space.Remove(Thrusters);
-            Sector.Redria.Space.Remove(ControlSurfaces);
+            //Sector.Redria.Space.Remove(Thrusters);
+            //Sector.Redria.Space.Remove(ControlSurfaces);
             Sector.Redria.Space.Remove(Entity);
             Game.Components.Remove(this);
+        }
+        public void SetThrottle(float throttle)
+        {
+            engineNoise.Pitch = -0.5f+throttle;
         }
         public override void Update(float dt)
         {
@@ -86,15 +90,15 @@ namespace MobileFortressClient.Ships
                 if (Controls.Instance.Down) vVel -= Data.StrafeVelocity;
                 if (Controls.Instance.Left) hVel -= Data.StrafeVelocity;
                 if (Controls.Instance.Right) hVel += Data.StrafeVelocity;
-                Thrusters.Settings.VelocityMotor.GoalVelocity = Vector3.Transform(new Vector3(hVel, vVel, -Thrust), Orientation);
+                //Thrusters.Settings.VelocityMotor.GoalVelocity = Vector3.Transform(new Vector3(hVel, vVel, -Thrust), Orientation);
 
                 Quaternion target = Quaternion.CreateFromRotationMatrix(Matrix.CreateFromYawPitchRoll(Controls.Instance.Yaw, Controls.Instance.Pitch, Controls.Instance.Roll));
-                ControlSurfaces.Settings.Servo.Goal = target;
-                ControlSurfaces.Settings.Servo.MaxCorrectiveVelocity = Data.Turn / 5;
+                //ControlSurfaces.Settings.Servo.Goal = target;
+                //ControlSurfaces.Settings.Servo.MaxCorrectiveVelocity = Data.Turn / 5;
             }
             else
             {
-                Thrusters.Settings.VelocityMotor.GoalVelocity = Vector3.Transform(new Vector3(0, 0, -Thrust), Orientation);
+                //Thrusters.Settings.VelocityMotor.GoalVelocity = Vector3.Transform(new Vector3(0, 0, -Thrust), Orientation);
             }
 
             /*if (engineParticle = !engineParticle)

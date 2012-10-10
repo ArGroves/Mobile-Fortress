@@ -86,8 +86,9 @@ namespace MobileFortressClient.Physics
         {
             if (netPosition != Vector3.Zero)
             {
-                if ((netPosition - Position).LengthSquared() > 2*2) Position = netPosition;
-                else Position = Vector3.Lerp(Position, netPosition, 0.08f);
+                Vector3 positionDifference = (netPosition - Position);
+                if (positionDifference.LengthSquared() > 2*2) Position = netPosition;
+                else Position = Vector3.SmoothStep(Position, netPosition, Network.Interpolation);
                 if ((netOrientation - Orientation).LengthSquared() > 1*1) Orientation = netOrientation;
                 else Orientation = Quaternion.Slerp(Orientation, netOrientation, 0.2f);
             }
@@ -97,7 +98,7 @@ namespace MobileFortressClient.Physics
         {
             netPosition = position;
             netOrientation = orientation;
-            Velocity = velocity;
+            //Velocity = velocity;
         }
         public virtual void Destroy()
         {

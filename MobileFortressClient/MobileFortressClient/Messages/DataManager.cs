@@ -236,6 +236,7 @@ namespace MobileFortressClient.Messages
                 case NetMsgType.ShipUpdate:
                     #region ShipUpdate
                     var Health = msg.ReadFloat();
+                    var Throttle = msg.ReadFloat();
                     var AmmoCount = msg.ReadByte();
                     var Ammo = new ushort[AmmoCount];
                     for (byte i = 0; i < AmmoCount; i++)
@@ -251,7 +252,11 @@ namespace MobileFortressClient.Messages
                             HUD.SetAmmo(i, Ammo[i]);
                         ping = msg.SenderConnection.AverageRoundtripTime * 1000;
                         HUD.SetPing(ping);
+
+                        var ship = (ShipObj)Camera.Target;
+                        ship.SetThrottle(Throttle);
                     }
+                    
                     #endregion
                     break;
                 default:

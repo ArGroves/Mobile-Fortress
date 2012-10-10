@@ -37,6 +37,10 @@ namespace MobileFortressServer
             config.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
             config.EnableMessageType(NetIncomingMessageType.UnconnectedData);
             config.Port = Port;
+            config.SimulatedMinimumLatency = 0.0025f;
+            config.SimulatedRandomLatency = 0.002f;
+            config.SimulatedDuplicatesChance = 0.00005f;
+            config.SimulatedLoss = 0.0001f;
             //config.EnableUPnP = true;
 
             Server = new NetServer(config);

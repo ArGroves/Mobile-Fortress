@@ -67,13 +67,13 @@ namespace MobileFortressServer.Data
         {
             new PartData(name:"Dual Turbine",
                 desc: "Two equipment slots in exchange for limited strafe ability.",
-                resource: Resources.ShipPartIndex+2, weight: 30, armor: 75, equipmentSlots: 2, thrust: 35, strafe: 8),
+                resource: Resources.ShipPartIndex+2, weight: 30, armor: 75, equipmentSlots: 2, thrust: 75, strafe: 8),
             new PartData(name:"Solo RE",
                 desc: "Lighter engine with good strafing, but less thrust.",
-                resource: Resources.ShipPartIndex+5, weight: 25, armor: 100, equipmentSlots: 1, thrust: 25, strafe:18),
+                resource: Resources.ShipPartIndex+5, weight: 25, armor: 100, equipmentSlots: 1, thrust: 55, strafe:18),
             new PartData(name:"Rocket",
                 desc: "Enormous amounts of forward thrust with no strafing.",
-                resource: Resources.ShipPartIndex+7, weight: 35, armor: 60, equipmentSlots: 0, thrust: 60)
+                resource: Resources.ShipPartIndex+7, weight: 35, armor: 60, equipmentSlots: 0, thrust: 90)
         };
 
         public PartData Copy()

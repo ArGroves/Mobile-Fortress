@@ -17,8 +17,8 @@ namespace MobileFortressServer.Data
         new BulletData(sprite: 0, size: 1f, velocity: 120, spread: 1.5f, power: 100),
         new RocketData(modelID: 21, hitboxRadius: 0.5f, explosionSize: 4, muzzleVel: 75, spread: 3, power: 75,
             fuel: 8, motorAccel: 0, lifetime: 12),
-        new RocketData(modelID: 21, hitboxRadius: 0.5f, explosionSize: 6, muzzleVel: 60, spread: 1, power: 170,
-            fuel: 10, motorAccel: 0, lifetime: 15, homingRadius: 45, maxRange: 350),
+        new RocketData(modelID: 21, hitboxRadius: 0.5f, explosionSize: 6, muzzleVel: 80, spread: 1, power: 170,
+            fuel: 10, motorAccel: 2, lifetime: 15, homingRadius: 45, maxRange: 350),
         new RocketData(modelID: 22, hitboxRadius: 0.5f, explosionSize: 20, muzzleVel: 0, spread: 6, power: 500,
             fuel: 0, motorAccel: 0, lifetime: 25)
         };

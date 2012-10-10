@@ -52,10 +52,13 @@ namespace MobileFortressClient.Messages
                 soul.currentShip = NewShip;
                 NewShip.Client = soul;
                 //Console.WriteLine(msg.SenderEndpoint.Address + "'s Ship ID: " + NewShip.ID);
-                MessageWriter.ClientEntityCreationMessage(soul.Owner,
-                    NewShip.ID, NewShip.Position, NewShip.Orientation,
-                    data.GeneratedData.NoseID, data.GeneratedData.CoreID, data.GeneratedData.EngineID,
-                    data.Weapons, msg.SenderConnection.RemoteUniqueIdentifier);
+                foreach (NetConnection c in Network.Server.Connections)
+                {
+                    MessageWriter.ClientEntityCreationMessage(c,
+                        NewShip.ID, NewShip.Position, NewShip.Orientation,
+                        data.GeneratedData.NoseID, data.GeneratedData.CoreID, data.GeneratedData.EngineID,
+                        data.Weapons, msg.SenderConnection.RemoteUniqueIdentifier);
+                }
             }
         }
     }

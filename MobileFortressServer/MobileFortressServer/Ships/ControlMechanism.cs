@@ -14,6 +14,9 @@ namespace MobileFortressServer.Ships
         public bool Down { get; private set; }
         public bool Left { get; private set; }
         public bool Right { get; private set; }
+        public bool ThrottleUp { get; private set; }
+        public bool ThrottleDown { get; private set; }
+        public bool Eject { get; private set; }
 
         public float Yaw { get; private set; }
         public float Pitch { get; private set; }
@@ -40,6 +43,15 @@ namespace MobileFortressServer.Ships
                     break;
                 case ControlKey.Up:
                     Up = edge;
+                    break;
+                case ControlKey.ThrottleDown:
+                    ThrottleDown = edge;
+                    break;
+                case ControlKey.ThrottleUp:
+                    ThrottleUp = edge;
+                    break;
+                case ControlKey.Eject:
+                    Eject = edge;
                     break;
             }
         }

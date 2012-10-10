@@ -27,6 +27,7 @@ namespace MobileFortressClient
 
         static double lastUpdate = NetTime.Now;
         const double ServerTick = (1d / 30d);
+        public static float Interpolation = 0.3f;
 
         public static bool IsConnected = false;
         public static bool JoinedGame = false;
@@ -49,6 +50,9 @@ namespace MobileFortressClient
             config.EnableMessageType(NetIncomingMessageType.DebugMessage);
             //config.EnableUPnP = true;
             config.Port = Port;
+            config.SimulatedMinimumLatency = 0.0025f;
+            config.SimulatedRandomLatency = 0.002f;
+            config.SimulatedLoss = 0.0001f;
 
             Client = new NetClient(config);
             Client.Start();

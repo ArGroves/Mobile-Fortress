@@ -36,7 +36,7 @@ namespace MobileFortressClient.Menus
         {
             frameCounter++;
 
-            string fps = string.Format("fps: {0} ping: {1}ms", frameRate, ping);
+            string fps = string.Format("fps: {0} ping: {1}ms lerp: {2}", frameRate, ping, Network.Interpolation);
             spriteBatch.DrawString(Resources.defaultFont, fps, new Vector2(32, 32), Color.White);
         }
     }

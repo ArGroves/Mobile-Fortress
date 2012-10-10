@@ -22,6 +22,7 @@ namespace MobileFortressClient
     {
         None = 0,
         LeftMouse = 1, RightMouse = 2,
-        Up = 3, Down = 4, Left = 5, Right = 6
+        Up = 3, Down = 4, Left = 5, Right = 6,
+        ThrottleUp = 7, ThrottleDown = 8, Eject = 9
     }
 }

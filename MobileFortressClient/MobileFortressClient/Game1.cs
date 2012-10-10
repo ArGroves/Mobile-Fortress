@@ -110,6 +110,12 @@ namespace MobileFortressClient
 
                     if (Camera.isLoaded) Camera.Update();
 
+                if (keyboard.IsKeyDown(Keys.Up))
+                    Network.Interpolation += 0.002f;
+                else if (keyboard.IsKeyDown(Keys.Down))
+                    Network.Interpolation -= 0.002f;
+                Network.Interpolation = MathHelper.Clamp(Network.Interpolation, 0.0f, 1.0f);
+
                 var HUD = (ShipHUD)MenuManager.Menu;
 
                 Network.Process(NetTime.Now);

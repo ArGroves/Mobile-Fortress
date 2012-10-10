@@ -31,14 +31,8 @@ namespace MobileFortressServer.Ships
 
         bool Locked = false;
 
-        public float ClampedYaw
-        {
-            get
-            {
-                float shipYaw = (float)Math.Acos(Vector3.Dot(Entity.WorldTransform.Forward, Vector3.Forward));
-                return MathHelper.Clamp(Controls.Yaw, shipYaw + MathHelper.PiOver4, shipYaw - MathHelper.PiOver4);
-            }
-        }
+        float throttle = 1.0f;
+        float grav = 0.0f;
 
         public ShipObj(Vector3 position, Quaternion orientation, ShipData data)
             : base()
@@ -49,6 +43,7 @@ namespace MobileFortressServer.Ships
             Data.Hitbox.Orientation = orientation;
             this.SetEntity(Data.Hitbox, 2);
 
+
             Health = Data.TotalArmor;
             Thrusters = new SingleEntityLinearMotor(Entity, Position);
             ControlSurfaces = new SingleEntityAngularMotor(Entity);
@@ -56,10 +51,10 @@ namespace MobileFortressServer.Ships
 
             Thrusters.Settings.Mode = MotorMode.VelocityMotor;
             Thrusters.Settings.VelocityMotor.Softness = 0.002f;
+            Entity.IsAffectedByGravity = true;
 
             Sector.Redria.Space.Add(Thrusters);
             Sector.Redria.Space.Add(ControlSurfaces);
-            Entity.IsAffectedByGravity = false;
             Network.AddShip();
         }
 
@@ -92,12 +87,20 @@ namespace MobileFortressServer.Ships
         {
             float vVel = 0;
             float hVel = 0;
-            float Thrust = Data.Thrust;
+            float Thrust = Data.Thrust * throttle;
             if (Controls.Up) vVel += Data.StrafeVelocity;
             if (Controls.Down) vVel -= Data.StrafeVelocity;
             if (Controls.Left) hVel -= Data.StrafeVelocity;
             if (Controls.Right) hVel += Data.StrafeVelocity;
-            Thrusters.Settings.VelocityMotor.GoalVelocity = Vector3.Transform(new Vector3(hVel, vVel, -Thrust), Orientation);
+
+            if (Controls.ThrottleUp && throttle <= 1.0f) throttle += 0.01f;
+            if (Controls.ThrottleDown && throttle >= 0.0f) throttle -= 0.01f;
+
+            float ThrustRatio = (Thrust / Data.Thrust);
+
+            Thrusters.Settings.VelocityMotor.Softness = 0.002f + (1-ThrustRatio)*0.5f;
+            Thrusters.Settings.VelocityMotor.GoalVelocity =
+                Vector3.Transform(new Vector3(hVel, vVel, -Thrust), Orientation);
 
             float minAoA = MathHelper.PiOver2;
 
@@ -195,11 +198,11 @@ namespace MobileFortressServer.Ships
 
             Quaternion target = Quaternion.CreateFromRotationMatrix(Matrix.CreateFromYawPitchRoll(Controls.Yaw, Controls.Pitch, Controls.Roll));
             ControlSurfaces.Settings.Servo.Goal = target;
-            ControlSurfaces.Settings.Servo.MaxCorrectiveVelocity = Data.Turn;
+            //ControlSurfaces.Settings.Servo.MaxCorrectiveVelocity = Data.Turn * ThrustRatio;                                                         
         }
 
         public float Health = 650;
-
+                                                                                                                                                                                                                                                                                                                       
         public void BulletStrike(BulletData bullet, float velocity)
         {
             var damage = bullet.Power;// * (velocity / bullet.MuzzleVel);
@@ -234,7 +237,7 @@ namespace MobileFortressServer.Ships
             {
                 Ammo[i++] = weapon.CurrentAmmo;
             }
-            MessageWriter.StatusMessage(connection, Health, Ammo);
+            MessageWriter.StatusMessage(connection, Health, throttle, Ammo);
         }
         public static float AngleOfAttack(Vector3 targetPoint, Vector3 position, Vector3 orientation)
         {

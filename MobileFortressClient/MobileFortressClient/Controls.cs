@@ -21,7 +21,8 @@ namespace MobileFortressClient
         public bool Down = false;
         public bool Left = false;
         public bool Right = false;
-        public bool Shift = false;
+        public bool ThrottleUp = false;
+        public bool ThrottleDown = false;
         public float deltaX = 0;
         public float deltaY = 0;
 
@@ -163,13 +164,25 @@ namespace MobileFortressClient
                 Network.SendControlMsg(Right, ControlKey.Right);
             }
 
-            if (!Shift && keyboard.IsKeyDown(Keys.LeftShift))
+            if (!ThrottleUp && keyboard.IsKeyDown(Keys.LeftShift))
             {
-                Shift = true;
+                ThrottleUp = true;
+                Network.SendControlMsg(ThrottleUp, ControlKey.ThrottleUp);
             }
-            if (Shift && keyboard.IsKeyUp(Keys.LeftShift))
+            if (ThrottleUp && keyboard.IsKeyUp(Keys.LeftShift))
             {
-                Shift = false;
+                ThrottleUp = false;
+                Network.SendControlMsg(ThrottleUp, ControlKey.ThrottleUp);
+            }
+            if (!ThrottleDown && keyboard.IsKeyDown(Keys.LeftControl))
+            {
+                ThrottleDown = true;
+                Network.SendControlMsg(ThrottleDown, ControlKey.ThrottleDown);
+            }
+            if (ThrottleUp && keyboard.IsKeyUp(Keys.LeftControl))
+            {
+                ThrottleDown = false;
+                Network.SendControlMsg(ThrottleDown, ControlKey.ThrottleDown);
             }
         }
 

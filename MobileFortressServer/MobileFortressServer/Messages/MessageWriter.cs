@@ -135,11 +135,12 @@ namespace MobileFortressServer.Messages
             msg.Write(orientation.Z); msg.Write(orientation.W);
             Network.Server.SendMessage(msg, c, NetDeliveryMethod.UnreliableSequenced, 1);
         }
-        public static void StatusMessage(NetConnection c, float health, ushort[] ammo)
+        public static void StatusMessage(NetConnection c, float health, float throttle, ushort[] ammo)
         {
             var msg = Network.Server.CreateMessage();
             msg.Write((byte)NetMsgType.ShipUpdate);
             msg.Write(health);
+            msg.Write(throttle);
             msg.Write((byte)ammo.Length);
             for (byte i = 0; i < ammo.Length; i++)
             {
